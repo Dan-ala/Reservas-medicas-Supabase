@@ -1,0 +1,215 @@
+.dashboard-container {
+    padding: 20px;
+    max-width: 900px;
+    margin: 20px auto; 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; 
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+.header-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.header-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.dashboard-main-title {
+    color: #1e3a8a; 
+    margin: 0;
+    font-size: 2em;
+}
+
+.welcome-message {
+    color: #4b5563;
+    font-size: 1.1em;
+    font-weight: 500;
+}
+
+.logout-button {
+    background-color: #ef4444;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: background-color 0.2s, box-shadow 0.2s;
+    border: none;
+    cursor: pointer;
+}
+
+.logout-button:hover {
+    background-color: #dc2626;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.add-appointment-button {
+    background-color: #10b981; 
+    color: white;
+    padding: 8px 15px;
+    border-radius: 6px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 4px rgba(16, 185, 129, 0.3);
+}
+
+.add-appointment-button:hover {
+    background-color: #059669;
+    box-shadow: 0 4px 6px rgba(16, 185, 129, 0.4);
+}
+
+.add-appointment-button:disabled {
+    background-color: #a7f3d0;
+    cursor: not-allowed;
+}
+
+
+.message { 
+    padding: 15px;
+    margin: 20px 0;
+    border-radius: 8px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.loading-message, 
+.error-message, 
+.no-data-message {
+    text-align: center;
+    padding: 30px;
+    font-size: 1.1em;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.loading-message {
+    background-color: #f0f4ff;
+    color: #3b82f6;
+}
+
+.error-message, .message.error {
+    background-color: #fee2e2;
+    color: #dc2626; 
+    border: 1px solid #f87171;
+}
+
+.no-data-message {
+    background-color: #f9fafb;
+    color: #6b7280;
+    border: 1px solid #e5e7eb;
+}
+
+.message.success {
+    background-color: #d1fae5; 
+    color: #059669; 
+    border: 1px solid #34d399;
+}
+
+
+.appointments-title {
+    text-align: center;
+    color: #1e3a8a;
+    margin: 40px 0 20px 0;
+}
+
+.appointments-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+}
+
+.appointment-card {
+    background-color: #ffffff;
+    border: 1px solid #e0e7ff; 
+    border-left: 6px solid #3b82f6;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s;
+    display: flex;
+    flex-direction: column;
+}
+
+.appointment-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.card-detail {
+    margin: 8px 0;
+    font-size: 15px;
+    line-height: 1.4;
+    color: #374151;
+}
+
+.card-detail strong {
+    color: #1e3a8a;
+    min-width: 80px;
+    display: inline-block;
+}
+
+
+.card-actions {
+    display: flex;
+    gap: 10px; 
+    margin-top: 15px;
+}
+
+
+.update-button {
+    flex: 1;
+    background-color: #3b82f6; 
+    color: white;
+    padding: 10px 15px;
+    border-radius: 6px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.update-button:hover:not(:disabled) {
+    background-color: #2563eb;
+}
+
+.update-button:disabled {
+    background-color: #93c5fd;
+    cursor: not-allowed;
+}
+
+
+.cancel-button {
+    flex: 1;
+    background-color: #dc2626; 
+    color: white;
+    padding: 10px 15px;
+    border-radius: 6px;
+    font-weight: 600;
+    margin-top: 0; 
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    width: auto; 
+}
+
+.cancel-button:hover:not(:disabled) {
+    background-color: #b91c1c;
+}
+
+.cancel-button:disabled {
+    background-color: #fca5a5;
+    cursor: not-allowed;
+}

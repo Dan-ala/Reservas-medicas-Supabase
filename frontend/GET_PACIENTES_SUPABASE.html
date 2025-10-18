@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pacientes</title>
+</head>
+<body>
+    <h2>Listado de Pacientes</h2>
+    <table border="1" id="tablaPacientes">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Fecha Nacimiento</th>
+                <th>Sexo</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <script>
+        const url = 'https://gathxhgdigoddmgikaic.supabase.co/rest/v1/pacientes'; // Se quita 'pacientes'
+        const headers = {
+        apikey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdhdGh4aGdkaWdvZGRtZ2lrYWljIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk1OTY4ODksImV4cCI6MjA3NTE3Mjg4OX0.5LaUmxqqJfzmw5BPwE6DnaVUrqG3qvLyKClL3uID8q0',
+        Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdhdGh4aGdkaWdvZGRtZ2lrYWljIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk1OTY4ODksImV4cCI6MjA3NTE3Mjg4OX0.5LaUmxqqJfzmw5BPwE6DnaVUrqG3qvLyKClL3uID8q0'
+    };
+
+    fetch(url, { headers, method : "GET" }) // Se agrega 'method : "GET"'
+        .then(res => res.json())
+        .then(data => { // Se comenta el siguiente código:
+            console.log("Datos recibidos:", data); // 👀 Verifica en consola
+            const tbody = document.querySelector('#tablaPacientes tbody');
+            data.forEach(p => {
+                const row = `
+                  <tr>
+                    <td>${p.pacienteid ?? '—'}</td>
+                    <td>${p.nombre ?? '—'}</td>
+                    <td>${p.apellido ?? '—'}</td>
+                    <td>${p.fechanacimiento ?? '—'}</td>
+                    <td>${p.sexo ?? '—'}</td>
+                  </tr>`;
+                tbody.innerHTML += row;
+         });
+        console.log(data);
+        })
+        .catch(err => console.error("Error al obtener datos:", err));
+    </script>
+</body>
+</html>

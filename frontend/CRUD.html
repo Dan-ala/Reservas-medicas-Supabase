@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>CRUD Pacientes Supabase</title>
+    <style>
+        table, th, td { border: 1px solid black; border-collapse: collapse; padding: 5px; }
+        input, select { margin: 5px; }
+        .form-container { margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <h2>Gestión de Pacientes</h2>
+    
+    
+    <div class="form-container">
+        <form id="formPaciente">
+            <input type="hidden" name="pacienteid" id="pacienteid">
+            <label>Nombre: <input type="text" name="nombre" required></label>
+            <label>Apellido: <input type="text" name="apellido" required></label>
+            <label>Fecha Nacimiento: <input type="date" name="fechanacimiento" required></label>
+            <label>Sexo: 
+            <select name="sexo" required>
+                <option value="M">Masculino</option>
+                <option value="F">Femenino</option>
+            </select>
+            </label>
+            <label>Dirección: <input type="text" name="direccion" required></label>
+            <label>Teléfono <input type="text" name="telefono" required></label>
+            <label>Correo electrónico <input type="text" name="correoelectronico" required></label>
+            <label>Tipo ID: <input type="text" name="tipoidentificacion" required></label>
+            <label>Número ID: <input type="text" name="numerodeidentificacion" required></label>
+            <button type="submit">Guardar</button>
+            <button type="button" onclick="resetForm()">Cancelar</button>
+        </form>
+    </div>
+    
+    <table id="tablaPacientes">
+        <thead>
+            <tr>
+                <th>ID</th><th>Nombre</th><th>Apellido</th><th>Fecha Nac.</th><th>Sexo</th><th>Dirección</th><th>Teléfono</th><th>Correo electrónico</th><th>Tipo ID</th><th># ID</th><th>Acciones</th>
+            </tr>
+        </thead>
+      <tbody></tbody>
+    </table>
+
+  <script>
+    const API_URL = 'https://gathxhgdigoddmgikaic.supabase.co/rest/v1/pacientes';
+    const HEADERS = {
+      'Content-Type': 'application/json',
+      'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdhdGh4aGdkaWdvZGRtZ2lrYWljIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk1OTY4ODksImV4cCI6MjA3NTE3Mjg4OX0.5LaUmxqqJfzmw5BPwE6DnaVUrqG3qvLyKClL3uID8q0',
+      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdhdGh4aGdkaWdvZGRtZ2lrYWljIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk1OTY4ODksImV4cCI6MjA3NTE3Mjg4OX0.5LaUmxqqJfzmw5BPwE6DnaVUrqG3qvLyKClL3uID8q0'
+    };
+
+    const form = document.getElementById('formPaciente');
+    const tbody = document.querySelector('#tablaPacientes tbody');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(form));
+      const isUpdate = data.pacienteid;
+
+      delete data.pacienteid
+
+      try {
+        const res = await fetch(
+          isUpdate ? `${API_URL}?pacienteid=eq.${form.pacienteid.value}` : API_URL, {
+          method: isUpdate ? 'PATCH' : 'POST',
+          headers: HEADERS,
+          body: JSON.stringify(data)
+        });
+        if (res.ok) {
+          alert(isUpdate ? '✅ Paciente actualizado' : '✅ Paciente creado');
+          form.reset();
+          loadPacientes();
+        } else {
+          const error = await res.json();
+          alert('❌ Error: ' + (error.message || JSON.stringify(error)));
+        }
+      } catch (err) {
+        alert('❌ Error de red');
+        console.error(err);
+      }
+    });
+
+    async function loadPacientes() {
+      tbody.innerHTML = '';
+      const res = await fetch(API_URL + '?select=*', { headers: HEADERS });
+      const data = await res.json();
+
+      data.forEach(p => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${p.pacienteid}</td>
+          <td>${p.nombre}</td>
+          <td>${p.apellido}</td>
+          <td>${p.fechanacimiento}</td>
+          <td>${p.sexo}</td>
+          <td>${p.direccion}</td>
+          <td>${p.telefono}</td>
+          <td>${p.correoelectronico}</td>
+          <td>${p.tipoidentificacion}</td>
+          <td>${p.numerodeidentificacion}</td>
+          <td>
+            <button onclick='editPaciente(${JSON.stringify(p)})'>✏️</button>
+            <button onclick='deletePaciente(${p.pacienteid})'>🗑️</button>
+          </td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    function editPaciente(p) {
+      for (const key in p) {
+        if (form[key]) form[key].value = p[key];
+      }
+    }
+
+    async function deletePaciente(id) {
+      if (!confirm('¿Eliminar paciente?')) return;
+      const res = await fetch(`${API_URL}?pacienteid=eq.${id}`, {
+        method: 'DELETE',
+        headers: HEADERS
+      });
+      if (res.ok) {
+        alert('✅ Paciente eliminado');
+        loadPacientes();
+      } else {
+        alert('❌ Error al eliminar');
+      }
+    }
+
+    function resetForm() {
+        form.reset();
+        form.pacienteid.value = '';
+    }
+
+    loadPacientes();
+  </script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Insertar Paciente</title>
+</head>
+<body>
+    <h2>Insertar Paciente</h2>
+
+    <form id="formPaciente">
+        <label>Nombre: <input type="text" name="nombre" required></label><br>
+        <label>Apellido: <input type="text" name="apellido" required></label><br>
+        <label>Fecha de nacimiento: <input type="date" name="fechanacimiento" required></label><br>
+        <label>Sexo: 
+        <select name="sexo" required>
+            <option value="M">Masculino</option>
+            <option value="F">Femenino</option>
+        </select>
+        </label><br>
+        <label>Dirección: <input type="text" name="direccion" required></label><br>
+        <label>Teléfono: <input type="text" name="telefono"></label><br>
+        <label>Correo electrónico: <input type="email" name="correoelectronico"></label><br>
+        <label>Tipo de identificación: <input type="text" name="tipoidentificacion" required></label><br>
+        <label>Número de identificación: <input type="text" name="numerodeidentificacion" required></label><br>
+        <button type="submit">Guardar</button>
+    </form>
+
+    <script>
+        const form = document.getElementById('formPaciente');
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+        const data = Object.fromEntries(new FormData(form));
+        const url = 'https://gathxhgdigoddmgikaic.supabase.co/rest/v1/pacientes';
+        const headers = {
+            'Content-Type': 'application/json',
+            'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdhdGh4aGdkaWdvZGRtZ2lrYWljIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk1OTY4ODksImV4cCI6MjA3NTE3Mjg4OX0.5LaUmxqqJfzmw5BPwE6DnaVUrqG3qvLyKClL3uID8q0',
+            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdhdGh4aGdkaWdvZGRtZ2lrYWljIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk1OTY4ODksImV4cCI6MjA3NTE3Mjg4OX0.5LaUmxqqJfzmw5BPwE6DnaVUrqG3qvLyKClL3uID8q0'
+        };
+
+        try {
+            const res = await fetch(url, {
+                method: 'POST',
+                mode:"cors",
+                headers,
+                body: JSON.stringify(data)
+            });
+        // debugger // Se usa 'debugger' para pausar la aplicación ahí, para mirar el código desde la 'consola del navegador'
+        if (res.ok) {
+            alert('✅ Paciente insertado correctamente');
+            form.reset();
+        } else {
+            const error = await res.json();
+            console.error('Error:', error);
+            alert('❌ Error al insertar: ' + (error.message || JSON.stringify(error)));
+        }
+        } catch (err) {
+        console.error('Error de red:', err);
+        alert('❌ Error de red al conectar con Supabase');
+        }
+    });
+    </script>
+</body>
+</html>

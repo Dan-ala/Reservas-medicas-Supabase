@@ -1,0 +1,89 @@
+/* BookAppointment.css */
+
+.booking-container {
+    max-width: 500px;
+    margin: 40px auto;
+    padding: 30px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.booking-container h1 {
+    text-align: center;
+    color: #1e3a8a;
+    margin-bottom: 25px;
+    font-size: 1.8em;
+}
+
+/* Style for the 'Volver al Dashboard' button */
+.booking-container button:first-of-type { 
+    background: #6b7280; /* Gray */
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition: background 0.3s;
+    display: block; /* Make it take its own line */
+}
+
+.booking-container button:first-of-type:hover {
+    background: #4b5563;
+}
+
+.booking-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.booking-form label {
+    font-weight: 600;
+    color: #374151;
+    margin-top: 5px;
+    font-size: 0.95em;
+}
+
+.booking-form input[type="date"],
+.booking-form input[type="time"],
+.booking-form select {
+    padding: 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 16px;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+}
+
+.booking-form input:focus,
+.booking-form select:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+.booking-form button[type="submit"] {
+    background-color: #3b82f6; /* Blue submit button */
+    color: white;
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 25px;
+    transition: background 0.2s;
+}
+
+.booking-form button[type="submit"]:hover:not(:disabled) {
+    background-color: #2563eb;
+}
+
+.booking-form button[type="submit"]:disabled {
+    background-color: #93c5fd;
+    cursor: not-allowed;
+}
